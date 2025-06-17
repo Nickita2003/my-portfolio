@@ -433,9 +433,9 @@
       /* Portfolio Section - Исправлено перекрытие */
       .portfolio-section {
         position: relative;
-        padding: 150px 0 100px;
+        padding: 100px 0; /* Уменьшенный отступ сверху */
         overflow: hidden;
-        z-index: 100; /* Увеличенный z-index */
+        z-index: 10; /* Нормальный z-index */
       }
 
       .section-title {
@@ -475,7 +475,7 @@
         margin: 0 auto;
         width: 100%;
         max-width: 1000px;
-        z-index: 110; /* Увеличенный z-index */
+        z-index: 10; /* Нормальный z-index */
       }
 
       .carousel {
@@ -496,7 +496,8 @@
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         cursor: pointer;
         transform-origin: center;
-        transform: rotateY(calc(var(--i) * 45deg)) translateZ(550px);
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(500px); /* Уменьшенный translateZ */
+        backface-visibility: hidden; /* Предотвращение артефактов при повороте */
       }
 
       .carousel-item.active {
@@ -625,7 +626,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 2000;
+        z-index: 3000; /* Высокий z-index для модального окна */
         opacity: 0;
         pointer-events: none;
         transition: var(--transition);
@@ -869,6 +870,16 @@
         color: var(--secondary-text);
       }
 
+      /* Contact Social Links */
+      .contact-social {
+        margin-top: 30px;
+      }
+
+      .contact-social h4 {
+        color: var(--accent);
+        margin-bottom: 15px;
+      }
+
       /* Responsive */
       @media (max-width: 992px) {
         .hero-content {
@@ -907,7 +918,7 @@
         }
 
         .portfolio-section {
-          padding: 100px 0 60px;
+          padding: 80px 0 60px;
         }
       }
 
@@ -932,10 +943,11 @@
         .carousel-item {
           width: 250px;
           height: 350px;
+          transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px); /* Адаптивное значение */
         }
 
         .portfolio-section {
-          padding: 80px 0 40px;
+          padding: 60px 0 40px;
         }
       }
 
@@ -958,7 +970,13 @@
         }
 
         .portfolio-section {
-          padding: 60px 0 30px;
+          padding: 50px 0 30px;
+        }
+
+        .carousel-item {
+          width: 220px;
+          height: 320px;
+          transform: rotateY(calc(var(--i) * 45deg)) translateZ(350px); /* Адаптивное значение */
         }
       }
     </style>
@@ -1276,6 +1294,31 @@
                   Телефон
                 </h4>
                 <p>+7 (959) 122-75-10</p>
+                <p>+7 (988) 948-60-10</p>
+              </div>
+            </div>
+
+            <!-- Добавленный блок социальных сетей -->
+            <div class="contact-social">
+              <h4 style="color: var(--accent); margin-bottom: 15px">
+                Социальные сети
+              </h4>
+              <div class="social-links">
+                <a href="https://linkedin.com" target="_blank"
+                  ><i class="fab fa-linkedin-in"></i
+                ></a>
+                <a href="https://github.com/Nickita2003" target="_blank"
+                  ><i class="fab fa-github"></i
+                ></a>
+                <a href="https://twitter.com" target="_blank"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="https://t.me/nt_201" target="_blank"
+                  ><i class="fab fa-telegram"></i
+                ></a>
+                <a href="https://instagram.com" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -1346,10 +1389,18 @@
               и бизнес-аналитики.
             </p>
             <div class="social-links">
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-github"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-dribbble"></i></a>
+              <a href="https://linkedin.com" target="_blank"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="https://github.com/Nickita2003" target="_blank"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a href="https://twitter.com" target="_blank"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="https://t.me/nt_201" target="_blank"
+                ><i class="fab fa-telegram"></i
+              ></a>
             </div>
           </div>
           <div class="footer-column">
@@ -1552,14 +1603,14 @@
         carouselItem.dataset.direction = item.direction;
 
         carouselItem.innerHTML = `
-                <div class="carousel-image" style="background-image: url('${item.image}')"></div>
-                <div class="carousel-overlay">
-                    <h3>${item.title}</h3>
-                    <div class="carousel-tags">
-                        ${item.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
-                    </div>
+            <div class="carousel-image" style="background-image: url('${item.image}')"></div>
+            <div class="carousel-overlay">
+                <h3>${item.title}</h3>
+                <div class="carousel-tags">
+                    ${item.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
                 </div>
-            `;
+            </div>
+        `;
 
         carouselItem.addEventListener("click", () => openModal(item));
         carousel.appendChild(carouselItem);
@@ -1628,31 +1679,31 @@
 
         if (project.type === "image") {
           mediaContent.innerHTML = `
-                    <div class="modal-image" style="background-image: url('${project.image}')"></div>
-                `;
+                  <div class="modal-image" style="background-image: url('${project.image}')"></div>
+              `;
         } else if (project.type === "audio") {
           mediaContent.innerHTML = `
-                    <div class="audio-player">
-                        <i class="fas fa-music" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
-                        <h3 style="margin-bottom: 15px;">${project.title}</h3>
-                        <p>Прослушайте демо генерации аудио</p>
-                        <div class="audio-controls">
-                            <button class="audio-btn">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
+                  <div class="audio-player">
+                      <i class="fas fa-music" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
+                      <h3 style="margin-bottom: 15px;">${project.title}</h3>
+                      <p>Прослушайте демо генерации аудио</p>
+                      <div class="audio-controls">
+                          <button class="audio-btn">
+                              <i class="fas fa-play"></i>
+                          </button>
+                      </div>
+                  </div>
+              `;
         } else {
           mediaContent.innerHTML = `
-                    <div style="text-align: center; padding: 30px;">
-                        <i class="fas fa-file-alt" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
-                        <h3>${project.title}</h3>
-                        <p style="margin-top: 20px; max-width: 400px;">
-                            Генерация текстового контента с использованием продвинутых промптов и семантического анализа
-                        </p>
-                    </div>
-                `;
+                  <div style="text-align: center; padding: 30px;">
+                      <i class="fas fa-file-alt" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
+                      <h3>${project.title}</h3>
+                      <p style="margin-top: 20px; max-width: 400px;">
+                          Генерация текстового контента с использованием продвинутых промптов и семантического анализа
+                      </p>
+                  </div>
+              `;
         }
 
         modal.classList.add("active");
@@ -1710,16 +1761,16 @@
       // Добавляем анимацию подсветки для портфолио
       const style = document.createElement("style");
       style.innerHTML = `
-            @keyframes highlightPortfolio {
-                0% { box-shadow: 0 0 0 rgba(110, 68, 255, 0); }
-                50% { box-shadow: 0 0 30px rgba(110, 68, 255, 0.7); }
-                100% { box-shadow: 0 0 0 rgba(110, 68, 255, 0); }
-            }
-            
-            .portfolio-highlight {
-                animation: highlightPortfolio 1.5s ease-in-out;
-            }
-        `;
+          @keyframes highlightPortfolio {
+              0% { box-shadow: 0 0 0 rgba(110, 68, 255, 0); }
+              50% { box-shadow: 0 0 30px rgba(110, 68, 255, 0.7); }
+              100% { box-shadow: 0 0 0 rgba(110, 68, 255, 0); }
+          }
+          
+          .portfolio-highlight {
+              animation: highlightPortfolio 1.5s ease-in-out;
+          }
+      `;
       document.head.appendChild(style);
     </script>
   </body>
